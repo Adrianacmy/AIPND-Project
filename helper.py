@@ -171,8 +171,7 @@ def validation(model, dataloaders, criterion):
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
-    print('Accuracy of the network on the 10000 test images: %d %%' %
-          (100 * correct / total))
+    print('Accuracy of the network on the 10000 test images: %d %%' % (100 * correct / total))
 
 # validation(model, dataloaders['testing'], criterion)
 
@@ -235,6 +234,7 @@ def predict(image_path, model, gpu, topk=5):
         model.class_to_idx[c]: c for c in model.class_to_idx}
 
     mapped_classes = list(
-        inverted_class_to_idx[label] for label in classes.numpy()[0])
+        inverted_class_to_idx[label] for label in classes.numpy()[0]
+        )
 
     return probs.numpy()[0], mapped_classes

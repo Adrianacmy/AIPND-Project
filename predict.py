@@ -7,18 +7,12 @@ import helper
 
 def get_input_args():
     parser = argparse.ArgumentParser()
-
     parser.add_argument('input', type=str, help='Input image')
-    parser.add_argument('checkpoint', type=str,
-                        help='Model checkpoint file to use for prediction')
-    parser.add_argument('--top_k', type=int, default=5,
-                        help='Return top k most likely classes')
-    parser.add_argument('--gpu', dest='gpu',
-                        action='store_true', help='Use GPU for prediction')
-    parser.add_argument('--category_names', type=str,
-                        help='Mapping file used to map categories to real names')
+    parser.add_argument('checkpoint', type=str,help='checkpoint to predict')
+    parser.add_argument('--top_k', type=int, default=5, help='top_k lasses')
+    parser.add_argument('--gpu', dest='gpu',action='store_true', help='training device')
+    parser.add_argument('--cat_names', type=str,help='cat to names')
     parser.set_defaults(gpu=False)
-
     return parser.parse_args()
 
 
@@ -36,14 +30,12 @@ def main():
 
     use_mapping_file = False
 
-    if input_args.category_names:
-        with open(input_args.category_names, 'r') as f:
+    if input_args.cat_names:
+        with open(input_args.cat_names, 'r') as f:
             cat_to_name = json.load(f)
             use_mapping_file = True
 
     probs, classes = helper.predict(input_args.input, model, gpu, input_args.top_k)
-
-    print("Top {} classes for '{}' :".format(len(classes), input_args.input))
 
     for i in range(input_args.top_k):
         print("probability of class {}: {}".format(classes[i], probs[i]))

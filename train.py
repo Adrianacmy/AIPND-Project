@@ -7,15 +7,15 @@ import os
 def get_input_args():
     parser = argparse.ArgumentParser()
     valid_archs = {'densenet121', 'vgg16'}
+    parser.add_argument('--architectures', dest='architectures', default='densenet121', action='store', choices=valid_archs,
     parser.add_argument('data_dir', type=str, help='dir to load images')
     parser.add_argument('--save_dir', type=str, default='checkpoints', help='dir to save checkpoints, default checkpoints')
-    parser.add_argument('--learning_rate', type=float, default=0.005, help='learning rate, default 0.005')
     parser.add_argument('--hidden_units', type=int, default=500, help='hidden units, default 500')
-    parser.add_argument('--epochs', type=int, default=3, help='training epochs, default 3')
+    parser.add_argument('--learning_rate', type=float, default=0.005, help='learning rate, default 0.005')
     parser.add_argument('--gpu', dest='gpu', action='store_true', help='training device, default gpu')
+    parser.add_argument('--epochs', type=int, default=3, help='training epochs, default 3')
     parser.add_argument('--num_threads', type=int, default=8,
                         help='thread to training with cpu')
-    parser.add_argument('--architectures', dest='architectures', default='densenet121', action='store', choices=valid_archs,
                         help='model architectures')
 
     parser.set_defaults(gpu=False)
